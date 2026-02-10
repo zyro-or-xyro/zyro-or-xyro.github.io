@@ -1,0 +1,13 @@
+body {
+  background: #0e0e0e;
+  color: #ebdbb2;
+  font-family: system-ui, sans-serif;
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+h1 {
+  font-size: 3rem;
+}
