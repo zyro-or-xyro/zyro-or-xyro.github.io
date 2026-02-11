@@ -2,13 +2,40 @@ body {
   background: #0e0e0e;
   color: #ebebeb;
   font-family: system-ui, sans-serif;
-  display: grid;
-  place-items: start center;
-  align-content: top;
+  display: flex;
+  flex-direction: column; /* default: vertical */
+  align-items: center;
+  justify-content: center;
   min-height: 100vh;
   margin: 0;
   font-size: 1.1rem;
   line-height: 1.1;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+/* Landscape: width >= height → left-to-right layout */
+@media (min-aspect-ratio: 1/1) {
+  body {
+    flex-direction: row;
+    justify-content: flex-start; /* items left to right */
+    align-items: center; /* vertically center in row */
+    flex-wrap: wrap; /* wrap if too many buttons/text */
+    gap: 3rem;
+  }
+
+  img {
+    max-height: 60vh;
+    width: auto;
+  }
+
+  h1 {
+    font-size: 12vh;
+  }
+
+  p, .btn {
+    font-size: 1.5vw;
+  }
 }
 
 img {
@@ -20,16 +47,16 @@ img {
 }
 
 h1 {
-    font-family: Bricolage Grotesque;
-    font-size: 14vh;
-    line-height: 0;
+  font-family: Bricolage Grotesque;
+  font-size: 13vh;
+  line-height: 1;
+  margin: 0;
 }
 
 p {
   font-family: IBM Plex Sans;
-  font-size: 2vw;
-  line-height: 0;
-
+  font-size: 1.6vw;
+  line-height: 1.2;
 }
 
 .btn {
@@ -38,7 +65,7 @@ p {
   background: #0e0e0e;
   color: #ebebeb;
   text-decoration: none;
-  padding: 2vh 2vh;
+  padding: 1rem 2rem;
   border-radius: 0px;
   transition: 0.15s ease;
   font-size: 2vw;
