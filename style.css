@@ -1,13 +1,28 @@
 body {
   background: #0e0e0e;
-  color: #ebdbb2;
+  color: #ebebeb;
   font-family: system-ui, sans-serif;
   display: grid;
-  place-items: center;
-  height: 100vh;
+  place-items: start center;
+  align-content: start;
+  min-height: 100vh;
   margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+img {
+  max-height: 40vh;
+  height: auto;
+  width: 100%;
+  overflow: hidden;
+  display: block;
 }
 
 h1 {
-  font-size: 3rem;
+    font-family: Bricolage Grotesque;
+}
+
+p {
+  font-family: IBM Plex Sans;
 }
