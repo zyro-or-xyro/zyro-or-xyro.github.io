@@ -28,15 +28,14 @@ body {
     max-height: 60vh;
     width: 60vh;
   }
-
-  h1 {
-    max-height: 13vh;
-    font-size: 13vh;
+ h1 {
+    max-height: 1vh;
+    font-size: 14vh;
     padding-bottom: 13vh;
   }
 
   p, .btn {
-    font-size: 1.5vw;
+    font-size: 2vw;
   }
 }
 
@@ -50,14 +49,14 @@ img {
 
 h1 {
   font-family: Bricolage Grotesque;
-  font-size: 13vw;
+  font-size: svw;
   line-height: 1;
   margin: 0;
 }
 
 p {
   font-family: IBM Plex Sans;
-  font-size: 1.6vw;
+  font-size: 2vw;
   line-height: 1.2;
 }
 
@@ -98,3 +97,4 @@ button:focus-visible,
   align-items: center; /* always center buttons */
   gap: 1rem;
 }
+
