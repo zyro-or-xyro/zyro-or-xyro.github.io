@@ -1,7 +1,7 @@
 body {
   background: #0e0e0e;
   color: #ebebeb;
-  font-family: system-ui, sans-serif;
+  font-family: system-ui, sans-serif, FiraCode Nerd Font;
   display: flex;
   flex-direction: column; /* default: vertical */
   align-items: center;
@@ -62,7 +62,7 @@ p {
 }
 
 .btn {
-  font-family: Google Sans;
+  font-family: Google Sans, FiraCode Nerd Font;
   display: inline-block;
   background: #0e0e0e;
   color: #ebebeb;
