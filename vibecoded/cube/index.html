@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>cube arena</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #0e0e0e;
+  --fg: #ebebeb;
+  --card: #0e0e0e;
+  --border: #222;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 24px 28px 28px;
+  width: min(92vw, 460px);
+  text-align: center;
+}
+
+h1 {
+  font-family: Bricolage Grotesque;
+  margin: 0 0 6px;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.sub {
+  font-size: .9rem;
+  margin-bottom: 18px;
+  opacity: .8;
+}
+
+.arena {
+  position: relative;
+  height: 240px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  background: #0e0e0e;
+}
+
+.cube {
+  position: absolute;
+  width: 38px;
+  height: 38px;
+  border-radius: 0;
+  background: var(--fg);
+  cursor: grab;
+  touch-action: none;
+}
+
+.cube:active {
+  cursor: grabbing;
+}
+
+footer {
+  margin-top: 14px;
+  font-size: .7rem;
+  opacity: .6;
+}
+
+.arena {
+  position: relative;
+  height: 240px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.244) 1px, transparent 1px),
+    #0e0e0e;
+  background-size: 16px 16px;
+}
+
+    .back {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      font-size: .75rem;
+      text-decoration: none;
+      color: var(--fg);
+      opacity: .65;
+      transition: opacity .15s ease, transform .15s ease;
+    }
+
+    .back:hover {
+      opacity: 1;
+      transform: translateX(-2px);
+    }
+
+</style>
+</head>
+<body>
+
+<div class="card">
+  <a href="https://zyro-or-xyro.github.io/" class="back">← go back</a>
+  <h1>cube arena</h1>
+  <div class="sub">man throws cube, cube gets thrown</div>
+
+  <div class="arena" id="arena">
+    <div class="cube" id="cube"></div>
+  </div>
+
+  <footer>foss nonsense by zy
+coded by OpenAI's ChatGPT, styled by me.<br>24.63% changed from originally generated code (according to GPT)</footer>
+</div>
+
+<script>
+const arena = document.getElementById('arena');
+const cube = document.getElementById('cube');
+
+let x = 100, y = 100;
+let vx = 0, vy = 0;
+let dragging = false;
+
+let lastX = 0, lastY = 0, lastTime = 0;
+
+const friction = 0.995;
+const bounce = 0.9;
+
+function clamp(v, min, max) {
+  return Math.max(min, Math.min(max, v));
+}
+
+function setPos() {
+  cube.style.transform = `translate(${x}px, ${y}px)`;
+}
+
+cube.addEventListener('pointerdown', e => {
+  dragging = true;
+  cube.setPointerCapture(e.pointerId);
+
+  lastX = e.clientX;
+  lastY = e.clientY;
+  lastTime = performance.now();
+
+  vx = vy = 0;
+});
+
+window.addEventListener('pointermove', e => {
+  if (!dragging) return;
+
+  const rect = arena.getBoundingClientRect();
+  const px = e.clientX - rect.left - cube.offsetWidth / 2;
+  const py = e.clientY - rect.top - cube.offsetHeight / 2;
+
+  x = clamp(px, 0, arena.clientWidth - cube.offsetWidth);
+  y = clamp(py, 0, arena.clientHeight - cube.offsetHeight);
+
+  const now = performance.now();
+  const dt = now - lastTime || 16;
+
+  vx = (e.clientX - lastX) / dt * 16;
+  vy = (e.clientY - lastY) / dt * 16;
+
+  lastX = e.clientX;
+  lastY = e.clientY;
+  lastTime = now;
+
+  setPos();
+});
+
+window.addEventListener('pointerup', () => {
+  dragging = false;
+});
+
+function tick() {
+  if (!dragging) {
+    x += vx;
+    y += vy;
+
+    vx *= friction;
+    vy *= friction;
+
+    const maxX = arena.clientWidth - cube.offsetWidth;
+    const maxY = arena.clientHeight - cube.offsetHeight;
+
+    if (x <= 0 || x >= maxX) {
+      vx *= -bounce;
+      x = clamp(x, 0, maxX);
+    }
+
+    if (y <= 0 || y >= maxY) {
+      vy *= -bounce;
+      y = clamp(y, 0, maxY);
+    }
+
+    if (Math.abs(vx) < 0.01) vx = 0;
+    if (Math.abs(vy) < 0.01) vy = 0;
+
+    setPos();
+  }
+
+  requestAnimationFrame(tick);
+}
+
+setPos();
+tick();
+</script>
+</body>
+</html>
